@@ -1,8 +1,8 @@
-name: Deploy Jupyter Notebook to GitHub Pages
+name: Deploy Notebook
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -13,16 +13,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Install dependencies
+        run: |
+          pip install nbconvert
+      
+      - name: Convert to HTML
+        run: |
+          jupyter nbconvert index.ipynb --to html --output-dir ./_site
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      
-      - name: Convert Notebook to HTML
-        uses: jupyterlab/jupyter-render-action@v1
-        with:
-          args: 'index.ipynb'
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
