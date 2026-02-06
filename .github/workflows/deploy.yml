@@ -27,7 +27,7 @@ jobs:
       
       - name: Convert to HTML
         run: |
-          jupyter nbconvert index.ipynb --to html --output-dir ./_site
+          jupyter nbconvert index_v2.ipynb--to html --output-dir ./_site
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
